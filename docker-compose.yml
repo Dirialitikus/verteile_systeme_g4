@@ -1,0 +1,183 @@
+version: '3'
+
+
+volumes:
+  reportportal-data:
+    # external: true
+
+services:
+  sensor0:
+    container_name: Sensor0
+    build: sensor1
+
+    environment:
+      sensorID: 0
+
+    ## Uncomment if needed
+    # ports:
+    #   - "6969:6969"
+    volumes:
+      - reportportal-data:/data
+    restart: always
+  sensor1:
+    container_name: Sensor1
+    build: sensor1
+
+    environment:
+      sensorID: 1
+
+    ## Uncomment if needed
+    # ports:
+    #   - "6969:6969"
+    volumes:
+      - reportportal-data:/data
+    restart: always
+  sensor2:
+    container_name: Sensor2
+    build: sensor1
+
+    environment:
+      sensorID: 2
+
+    ## Uncomment if needed
+    # ports:
+    #   - "6969:6969"
+    volumes:
+      - reportportal-data:/data
+    restart: always
+  sensor3:
+    container_name: Sensor3
+    build: sensor1
+
+    environment:
+      sensorID: 3
+
+    ## Uncomment if needed
+    # ports:
+    #   - "6969:6969"
+    volumes:
+      - reportportal-data:/data
+    restart: always
+  sensor4:
+    container_name: Sensor4
+    build: Sensor2
+
+    environment:
+      sensorID: 4
+
+      ## Uncomment if needed
+      # ports:
+      #   - "6969:6969"
+    volumes:
+      - reportportal-data:/data
+    restart: always
+
+  sensor5:
+    container_name: Sensor5
+    build: Sensor2
+
+    environment:
+      sensorID: 5
+
+      ## Uncomment if needed
+      # ports:
+      #   - "6969:6969"
+    volumes:
+      - reportportal-data:/data
+    restart: always
+  sensor6:
+    container_name: Sensor6
+    build: Sensor2
+
+    environment:
+      sensorID: 6
+
+      ## Uncomment if needed
+      # ports:
+      #   - "6969:6969"
+    volumes:
+      - reportportal-data:/data
+    restart: always
+
+  sensor7:
+    container_name: Sensor7
+    build: Sensor2
+
+    environment:
+      sensorID: 7
+
+      ## Uncomment if needed
+      # ports:
+      #   - "6969:6969"
+    volumes:
+      - reportportal-data:/data
+    restart: always
+  iotgateway:
+    container_name: iotgateway
+    depends_on:
+      - sensor0
+      - sensor1
+      - sensor2
+      - sensor3
+      - sensor4
+      - sensor5
+      - sensor6
+      - sensor7
+    build: IoTGateway
+    ## Uncomment if needed
+    # ports:
+    #   - "81:81"
+    environment:
+      numberOfSensors: 4
+    volumes:
+      - reportportal-data:/data
+    restart: always
+
+  server:
+    container_name: server
+    depends_on:
+      - iotgateway
+      - coordinator
+    build: ./Service_Anbieter
+    volumes:
+      - reportportal-data:/data
+    restart: always
+
+  coordinator:
+    container_name: coordinator
+
+    build: ./Coordinator
+    environment:
+      numberOfDatabase: 2
+    volumes:
+       - reportportal-data:/data
+    restart: always
+
+  db1:
+    container_name: db1
+    depends_on:
+      - coordinator
+    build: ./Database
+    volumes:
+      - reportportal-data:/data
+    restart: always
+
+  db2:
+    container_name: db2
+    depends_on:
+     - coordinator
+    build: ./Database
+    volumes:
+      - reportportal-data:/data
+    restart: always
+
+  adapter:
+    container_name: adapter
+    depends_on:
+      - server
+    build: ./MQTT2UDPAdapter
+    volumes:
+      - reportportal-data:/data
+    restart: always
+
+

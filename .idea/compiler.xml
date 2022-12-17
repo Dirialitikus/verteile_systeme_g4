@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="IoTGateway" />
+        <module name="Service_Anbieter" />
+        <module name="Database" />
+        <module name="Sensor2" />
+        <module name="Adapter" />
+        <module name="Coordinator" />
+        <module name="sensor1" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Adapter" target="1.8" />
+      <module name="Coordinator" target="1.8" />
+      <module name="Database" target="1.8" />
+      <module name="group_d_4" target="11" />
+      <module name="IoTGateway" target="1.8" />
+      <module name="sensor1" target="1.8" />
+      <module name="Sensor2" target="1.8" />
+      <module name="Service_Anbieter" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
